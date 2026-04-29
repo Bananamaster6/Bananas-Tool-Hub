@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Midi to Grab • Bananamaster6's Tool Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div class="shell">
+  <section class="hero">
+    <div>
+      <div class="badge">Midi to Grab</div>
+      <h1>Convert MIDI into GRAB levels.</h1>
+      <p>
+        Import your MIDI, build the level JSON, then export it for grabvr.tools.
+        Use the tutorial button if you need the exact export flow.
+      </p>
+      <div class="pillrow">
+        <span class="pill"><b>Import</b> MIDI file</span>
+        <span class="pill"><b>Build</b> level JSON</span>
+        <span class="pill"><b>Export</b> .JSON</span>
+      </div>
+    </div>
+    <div class="badge2">Tool page</div>
+  </section>
+
+  <div class="navbar">
+    <a class="btn ghost" href="/index.html">Tool Hub</a>
+    <a class="btn primary" href="/midi-to-grab.html">Midi to Grab</a>
+    <a class="btn ghost" href="/video-to-grab.html">Video to Grab</a>
+    <a class="btn ghost" href="/bookmarks.html">Bookmarks</a>
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="cardhead"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Converter</div>
+      <div class="cardbody">
+        <div class="field"><label>MIDI File</label><input id="midiFile" type="file" accept=".mid,.midi" /></div>
+        <div class="row2">
+          <div class="field"><label>Track</label><select id="trackSel"><option value="-1">All tracks</option></select></div>
+          <div class="field"><label>Mode</label><select id="modeSel"><option value="single">Single voice</option><option value="poly">Poly voices</option><option value="reuse">Reuse notes</option></select></div>
+        </div>
+        <div class="btnrow">
+          <button id="buildBtn" class="primary">Build level</button>
+          <button id="downloadBtn" class="ghost" disabled>Download JSON</button>
+          <button id="tutorialBtn" class="ghost">Tutorial</button>
+        </div>
+        <div id="statusBox" class="status">Load a MIDI file to begin.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="cardhead"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Preview</div>
+      <div class="cardbody">
+        <div class="status">This page is ready for your converter logic. Add your MIDI-to-GRAB build code here, then export the JSON.</div>
+        <div class="footer">You can wire in the same build/export logic you already use. The tutorial button is included below.</div>
+      </div>
+    </section>
+  </div>
+
+  <div id="tutorialModal" class="modal hidden">
+    <div class="head"><span>Tutorial</span><button id="closeTutorialBtn" class="ghost" style="padding:8px 12px;">Close</button></div>
+    <div class="content">To export this as a level, import your midi, press "Build level" then Download the Json. After downloading the Json, go to grabvr.tools and press file > insert then click .JSON File, afterwards press File > Export > Export the .level, then paste the level file into your grab file using Cx file explorer, ZArchiver, etc.</div>
+  </div>
+</div>
+
+<div id="gateOverlay" class="overlay hidden">
+  <div class="lock">
+    <div class="top"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Page locked</div>
+    <div class="body">
+      <h2 style="margin:0 0 8px;letter-spacing:-.03em;">Unlock Midi to Grab</h2>
+      <p class="small" style="margin:0 0 14px;">Enter the same password to access this tool page.</p>
+      <div class="field"><label>Password</label><input id="gatePassword" type="password" placeholder="Password" /></div>
+      <div class="btnrow"><button id="gateButton" class="primary">Unlock</button></div>
+      <div id="gateStatus" class="status">Enter the password.</div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/gate.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const modal = document.getElementById('tutorialModal');
+  const tutorialBtn = document.getElementById('tutorialBtn');
+  const closeTutorialBtn = document.getElementById('closeTutorialBtn');
+  const buildBtn = document.getElementById('buildBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const statusBox = document.getElementById('statusBox');
+  const midiFile = document.getElementById('midiFile');
+  let lastJson = null;
+  function setStatus(msg, cls='') {
+    statusBox.className = 'status' + (cls ? ' ' + cls : '');
+    statusBox.textContent = msg;
+  }
+  tutorialBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+  closeTutorialBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+  buildBtn.addEventListener('click', () => {
+    if (!midiFile.files || !midiFile.files[0]) { setStatus('Choose a MIDI file first.', 'warn'); return; }
+    const name = midiFile.files[0].name.replace(/\.(mid|midi)$/i, '');
+    lastJson = { title: name, createdAt: new Date().toISOString(), note: 'Insert your converter build logic here.' };
+    downloadBtn.disabled = false;
+    setStatus(`Built JSON for "${name}". Replace this placeholder with your converter output.`, 'ok');
+  });
+  downloadBtn.addEventListener('click', () => {
+    if (!lastJson) return;
+    const blob = new Blob([JSON.stringify(lastJson, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (lastJson.title || 'midi_to_grab') + '.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+  await checkGate();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bananamaster6's Tool Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div class="shell">
+  <section class="hero">
+    <div>
+      <div class="badge">Bananamaster6’s Tool Hub</div>
+      <h1>Dark, sleek tools for GRAB.</h1>
+      <p>
+        A simple hub for GRAB-related tools. Use the buttons below to open each page.
+        The hub is protected with the same password gate as the tool pages.
+      </p>
+      <div class="pillrow">
+        <span class="pill"><b>Protected</b> password gate</span>
+        <span class="pill"><b>Fast</b> local navigation</span>
+        <span class="pill"><b>GRAB</b> tool pages</span>
+      </div>
+    </div>
+    <div class="badge2">Style kept dark + glassy</div>
+  </section>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="cardhead"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Hub</div>
+      <div class="cardbody">
+        <div class="status">
+          Pick a tool page. The hub stays locked until the password is entered.
+        </div>
+        <div class="toolgrid">
+          <div class="toolcard">
+            <div>
+              <h3>Midi to Grab</h3>
+              <p>Open the MIDI-to-GRAB converter page.</p>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="/midi-to-grab.html">Open Midi to Grab</a>
+            </div>
+          </div>
+          <div class="toolcard">
+            <div>
+              <h3>Video to Grab</h3>
+              <p>Placeholder tool page for video conversion tools.</p>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="/video-to-grab.html">Open Video to Grab</a>
+            </div>
+          </div>
+          <div class="toolcard">
+            <div>
+              <h3>Bookmarks</h3>
+              <p>Save useful GRAB links and tool shortcuts.</p>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="/bookmarks.html">Open Bookmarks</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="cardhead"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Password</div>
+      <div class="cardbody">
+        <div class="field">
+          <label>Password</label>
+          <input id="gatePassword" type="password" placeholder="Enter the hub password" />
+        </div>
+        <div class="btnrow">
+          <button id="gateButton" class="primary">Unlock Hub</button>
+          <button id="forgetButton" class="ghost">Lock Again</button>
+        </div>
+        <div id="gateStatus" class="status">Enter the password to unlock the hub.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="gateOverlay" class="overlay hidden">
+  <div class="lock">
+    <div class="top"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Hub locked</div>
+    <div class="body">
+      <h2 style="margin:0 0 8px;letter-spacing:-.03em;">Unlock Bananamaster6's Tool Hub</h2>
+      <p class="small" style="margin:0 0 14px;">Enter the password to open the hub and the tool pages.</p>
+      <div class="field">
+        <label>Password</label>
+        <input id="gatePassword" type="password" placeholder="Password" />
+      </div>
+      <div class="btnrow"><button id="gateButton" class="primary">Unlock</button></div>
+      <div id="gateStatus" class="status">Enter the password.</div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/gate.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const forget = document.getElementById('forgetButton');
+  if (forget) forget.addEventListener('click', () => {
+    localStorage.removeItem('b6hub_unlocked_v1');
+    location.reload();
+  });
+  await checkGate();
+});
+</script>
+</body>
+</html>

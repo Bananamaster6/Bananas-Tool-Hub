@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bookmarks • Bananamaster6's Tool Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div class="shell">
+  <section class="hero"><div><div class="badge">Bookmarks</div><h1>Saved links and tool shortcuts.</h1><p>Add your favorite GRAB links, tool pages, and export notes here.</p></div><div class="badge2">Bookmark manager</div></section>
+  <div class="navbar"><a class="btn ghost" href="/index.html">Tool Hub</a><a class="btn ghost" href="/midi-to-grab.html">Midi to Grab</a><a class="btn ghost" href="/video-to-grab.html">Video to Grab</a><a class="btn primary" href="/bookmarks.html">Bookmarks</a></div>
+  <div class="panel" style="margin-top:18px;"><div class="cardhead"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Bookmarks</div><div class="cardbody"><div class="status">This page is ready for your bookmarks list.</div></div></div>
+</div>
+<div id="gateOverlay" class="overlay hidden"><div class="lock"><div class="top"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Page locked</div><div class="body"><h2 style="margin:0 0 8px;letter-spacing:-.03em;">Unlock Bookmarks</h2><p class="small" style="margin:0 0 14px;">Enter the same password to access this page.</p><div class="field"><label>Password</label><input id="gatePassword" type="password" placeholder="Password" /></div><div class="btnrow"><button id="gateButton" class="primary">Unlock</button></div><div id="gateStatus" class="status">Enter the password.</div></div></div></div>
+<script src="/assets/gate.js"></script>
+<script>document.addEventListener('DOMContentLoaded', async () => { await checkGate(); });</script>
+</body>
+</html>
